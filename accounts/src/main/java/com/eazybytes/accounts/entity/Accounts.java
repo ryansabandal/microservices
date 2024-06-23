@@ -1,8 +1,7 @@
 package com.eazybytes.accounts.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,15 +15,19 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer extends BaseEntity {
+public class Accounts extends BaseEntity {
 
+  @Column(name = "customer_id")
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long customerId;
-  
-  private String name;
 
-  private String email;
+  @Column(name = "account_number")
+  @Id
+  private Long accountNumber;
 
-  private String mobileNumber;
+  @Column(name="account_type")
+  private String accountType;
+
+  @Column(name="branch_address")
+  private String branchAddress;
 }
