@@ -28,7 +28,7 @@ public class AccountsController {
 
     private IAccountsService iAccountsService;
 
-    @PostMapping("/create")
+    @PostMapping("/accounts")
     public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
         iAccountsService.createAccount(customerDto);
         return ResponseEntity
@@ -36,7 +36,7 @@ public class AccountsController {
                 .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
     }
 
-    @GetMapping("/fetch")
+    @GetMapping("/accounts")
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam String mobileNumber) {
         CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
@@ -57,7 +57,7 @@ public class AccountsController {
         }
     }
 
-    @DeleteMapping("/accounts/delete")
+    @DeleteMapping("/accounts")
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam String mobileNumber) {
         boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
 
