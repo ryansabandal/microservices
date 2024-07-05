@@ -11,6 +11,7 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.entity.Accounts;
 import com.eazybytes.accounts.entity.Customer;
 import com.eazybytes.accounts.exceptions.CustomerAlreadyExistsException;
+import com.eazybytes.accounts.exceptions.ResourceNotFoundException;
 import com.eazybytes.accounts.mapper.CustomerMapper;
 import com.eazybytes.accounts.repository.AccountsRepository;
 import com.eazybytes.accounts.repository.CustomerRepository;
@@ -50,6 +51,14 @@ public class AccountsServiceImpl implements IAccountsService {
     newAccount.setCreatedAt(LocalDateTime.now());
     newAccount.setCreatedBy("Anonymous");
     return newAccount;
+  }
+
+  @Override
+  public CustomerDto fetchAccount(String mobileNumber) {
+    customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+      ()-> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
+    );
+    return null;
   }
 
 }
