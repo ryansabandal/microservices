@@ -12,5 +12,5 @@ public class AccountsConstants {
   public static final String STATUS_200 = "200";
   public static final String MESSAGE_200 = "Request processed sucessfully";
   public static final String STATUS_500 = "500";
-  public static final String MESSAGE_t00 = "An error has occurred. Please try again.";
+  public static final String MESSAGE_500 = "An error has occurred. Please try again.";
 }
