@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-
 
 @RestController
 @RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -44,16 +43,32 @@ public class AccountsController {
     }
 
     @PutMapping("/accounts/{id}")
-    public ResponseEntity<ResponseDto> updateAccountDetails(@PathVariable String id, @RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> updateAccountDetails(@PathVariable String id,
+            @RequestBody CustomerDto customerDto) {
         boolean isUpdated = iAccountsService.updateAccount(customerDto);
         if (isUpdated) {
             return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
         } else {
             return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+        }
+    }
+
+    @DeleteMapping("/accounts/delete")
+    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam String mobileNumber) {
+        boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
+
+        if (isDeleted) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
         }
     }
 }
