@@ -1,6 +1,5 @@
 package com.eazybytes.accounts.exceptions;
 
-import java.net.http.HttpHeaders;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -19,21 +18,27 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.eazybytes.accounts.dto.ErrorResponseDto;
 
+
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
   @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(
+      MethodArgumentNotValidException ex,
+      org.springframework.http.HttpHeaders headers,
+      HttpStatusCode status,
+      WebRequest request) {
     Map<String, String> validationErrors = new HashMap<>();
     List<ObjectError> validationErrorList = ex.getBindingResult().getAllErrors();
 
     validationErrorList.forEach((error) -> {
-      String fieldName = ((FieldError)error).getField();
+      String fieldName = ((FieldError) error).getField();
       String validationMsg = error.getDefaultMessage();
       validationErrors.put(fieldName, validationMsg);
     });
-		return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
-	}
+
+    return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
+  }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorResponseDto> handleGlobalException(Exception exception,
